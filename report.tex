@@ -58,7 +58,7 @@ class DFA :
         return DFA(self.Q, self.Sigma, self.delta, self.q0, set(new_F))
 
 \end{lstlisting}
-dfa_ex01.py (modified)
+dfaex01.py (modified)
 \begin{lstlisting}[language=Python]
 import dfa
 
@@ -126,7 +126,7 @@ def __main__() :
 __main__()
 \end{lstlisting}
 
-dfa_ex03.py (modified)
+dfaex03.py (modified)
 
 \begin{lstlisting}[language=Python]
 import dfa
@@ -207,5 +207,7 @@ In the refuse method works on an instance of the DFA object that calls it,  I st
     \item $\{ w \mid w \text{ contains } 000 \text{ as a substring, meaning } w = x000y, 000y, \text{ or } x000, \text{ where } x, y \text{ are strings consisting of only 0's and 1's} \}$
     \item $\{ w \mid w \text{ contains } 011 \text{ as a substring, meaning } w = x011y, \text{ where } x, y \text{ are strings consisting of only 0's and 1's} \}$
 \end{enumerate}
+
+Interesting Question: Can two different automata recognize the same language but process words in fundamentally different ways?
 
 \end{document}
