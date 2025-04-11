@@ -1,5 +1,4 @@
 \documentclass{article}
-\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 \usepackage{tikz} 
 \usepackage{float}
@@ -66,18 +65,78 @@
 \theoremstyle{remark}    
   \newtheorem{remark}[theorem]{Remark}
 
+\title{CPSC-406 Report}
+\author{Zach Pratto  \\ Chapman University}
+
+\date{\today}
+
 \begin{document}
 
-\title{Finite Automata 2.1 Summary}
-\author{Zach Pratto}
-\date{\today}
 \maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+\section{Introduction}\label{intro}
+
+\section{Week by Week}\label{homework}
+
+\subsection{HW 1}
+
+\subsubsection{Introduction to Automata Theory: Homework}
+
+\begin{multline*}
+\text{1. Parking machine accepts sequences like:} \\
+55555,\quad 555\ 10,\quad 55\ 10\ 5,\quad 5\ 10\ 55,\quad 10\ 555, \\
+10\ 10\ 5,\quad 10\ 5\ 10,\quad 5\ 10\ 10 \\
+\text{Accepted words have no more than two tens (10s).}
+\end{multline*}
+
+\begin{align*}
+\text{Regex: } \quad & \text{pay(push + pay$^*$) + push$^*$}
+\end{align*}
+
+
+\subsubsection{DFAs: Homework}
+
+\begin{align*}
+L_1 &= \{ x01y \mid \text{for all } x, y \text{ in } \Sigma^* \} \\
+    &\text{Does the word contain the substring } 01?
+\end{align*}
+
+\begin{align*}
+L_2 &= \{ w \mid |w| = 2^n \text{ for some } n \in \mathbb{N} \} \\
+    &\text{Is the length of the word a power of 2?}
+\end{align*}
+
+\begin{align*}
+L_3 &= \{ w \mid |w|_0 = |w|_1 \} \\
+    &\text{Does the word have the same number of 0s and 1s?}
+\end{align*}
+
+\begin{align*}
+w_1 &= 10011 \Rightarrow L_1: \text{yes},\quad L_2: \text{no},\quad L_3: \text{no} \\
+w_2 &= 100   \Rightarrow L_1: \text{no},\quad L_2: \text{no},\quad L_3: \text{no} \\
+w_3 &= 10100100 \Rightarrow L_1: \text{yes},\quad L_2: \text{yes},\quad L_3: \text{no} \\
+w_4 &= 1010011100 \Rightarrow L_1: \text{yes},\quad L_2: \text{no},\quad L_3: \text{yes} \\
+w_5 &= 11110000 \Rightarrow L_1: \text{no},\quad L_2: \text{yes},\quad L_3: \text{yes}
+\end{align*}
+
+\begin{align*}
+\text{Test words for a DFA:} \quad w_1 &= 0010,\quad w_2 = 1101,\quad w_3 = 1100 \\
+\text{End states:} \quad &w_1 \rightarrow q_1,\quad w_2 \rightarrow q_1,\quad w_3 \rightarrow q_2 \\
+\text{Observation:} \quad &\text{All accepted words seem to require an } 01 \text{ substring.}
+\end{align*}
 
 Chapter 2.1 discusses how finite automata accomplish tasks and the problems that arise in their design. An example shows an automata schema for a customer, store, and bank in an electronic transaction. Initial simple schemas fail to handle errors, leading to stateless situations. Fixing these issues allows running the automata in parallel, creating $1 \times 4 \times 7 = 28$ states. Arcs define transitions, and unreachable states are removed. This illustrates key automata principles.
 
-\section*{Week 3 .py Labs}
+Question: Generally, how much of the overall design for a given automata goes into handling "bad" inputs? It seems like designs can start fairly simple but grow complicated due to having to handle so many different scenarios, especially undesirable ones.
+\subsection{HW 2}
 
-
+\subsubsection{Code from lab}
 dfa.py (modified)
 \begin{lstlisting}[language=Python]
 
@@ -123,6 +182,7 @@ class DFA :
 
 \end{lstlisting}
 dfaex01.py (modified)
+
 \begin{lstlisting}[language=Python]
 import dfa
 
@@ -189,6 +249,12 @@ def __main__() :
 
 __main__()
 \end{lstlisting}
+
+\subsubsection{Programming with automata, exercise 4}
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw2-1.jpg} 
+\end{figure}
 
 dfaex03.py (modified)
 
@@ -263,74 +329,136 @@ state that would be in after the last symbol is seen by the function.  So for A1
 
 In the refuse method works on an instance of the DFA object that calls it,  I start with an empty set of states,  and iterate over the set of all states of the DFA.  Then,  that state is appended to the empty set of states as the function checks if the states in the set F of final states.  Basically,  the goal to make the compliment of A was to swap the middle states with final states, meaning the opposite words are accepted.
 
-\section*{Exercise 2.2.4}
+\subsubsection{Exercise 2.2.4}
 
 
 \begin{enumerate}
-    \item \begin{align*}
-        L_1 &= \{ w \mid w \text{ ends with } 00, \text{ where } w = x00 \text{ for some string } x \text{ consisting of only 0's and 1's} \}
-    \end{align*}
+    \item 
+    \begin{multline*}
+        L_1 = \{ w \mid w \text{ ends with } 00, \text{ where } w = x00, \\
+        \text{for some string } x \text{ consisting of only 0's and 1's} \}
+    \end{multline*}
 
-    \item \begin{align*}
-        L_2 &= \{ w \mid w \text{ contains } 000 \text{ as a substring, meaning } w = x000y, 000y, \\
-        &\quad \text{or } x000, \text{ where } x, y \text{ are strings consisting of only 0's and 1's} \}
-    \end{align*}
+    \item 
+    \begin{multline*}
+        L_2 = \{ w \mid w \text{ contains } 000 \text{ as a substring, meaning } \\
+        w = x000y, 000y, \text{ or } x000, \text{ where } x, y \text{ are strings} \\
+        \text{consisting of only 0's and 1's} \}
+    \end{multline*}
 
-    \item \begin{align*}
-        L_3 &= \{ w \mid w \text{ contains } 011 \text{ as a substring, meaning } w = x011y, \text{ where } x, y \text{ are strings consisting of only 0's and 1's} \}
-    \end{align*}
+    \item 
+    \begin{multline*}
+        L_3 = \{ w \mid w \text{ contains } 011 \text{ as a substring, meaning } \\
+        w = x011y, \text{ where } x, y \text{ are strings consisting of only 0's and 1's} \}
+    \end{multline*}
 \end{enumerate}
 
+Question: Aside from tables and diagrams, could there be another niche method of representing DFAs that would be useful for some purpose?
 
-\section*{HW 3}
+\subsection{HW 3}
+
+\subsubsection{Operations on automata: homework 1 and 2}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw1.0.jpg} % Adjust the width as needed
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw3-1.1.jpg} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw1.11.jpg} % Adjust the width as needed
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw3-1.2.jpg} 
+\end{figure}
+
+\subsubsection{Exercise 2.2.7}
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw3-2.jpg} 
+\end{figure}
+
+Question: Can two different NFAs recognize the same language but process words in fundamentally different ways?
+
+\subsection{HW 4}
+
+\subsubsection{Determinization: homework 1 and 2}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw4-1.1.jpg} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw1.1.jpg} % Adjust the width as needed
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw4-2.1.jpg} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw1.00.jpg} % Adjust the width as needed
-\end{figure}
-
-
-\section*{HW 4}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw2.2.jpg} % Adjust the width as needed
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw4-2.2.jpg} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw2.3.jpg} % Adjust the width as needed
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw4-2.3.jpg} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw2.4.jpg} % Adjust the width as needed
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw4-2.4.jpg} 
+\end{figure}
+
+Question: What patterns can we observe in potential real world applications for automata that indicate strongly or weakly which type of automatom is most useful?
+
+\subsection{HW 5}
+
+\subsubsection{Exercise 3.2.1}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw5-3.2.1.jpg} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw2.5.jpg} % Adjust the width as needed
+    \includegraphics[angle=0, width=0.9\textwidth]{latexImages/hw5-3.2.1-d.jpg} 
+\end{figure}
+
+\subsubsection{Exercise 3.2.2}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw5-3.2.2.jpg} 
+\end{figure}
+
+\subsubsection{Exercise 4.4.1}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw5-4.4.1.jpg} 
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=-90, width=0.7\textwidth]{attachments/hw2.7.jpg} % Adjust the width as needed
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw5-4.4.1-b.jpg} 
 \end{figure}
 
+\subsubsection{Exercise 4.4.2}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90, width=0.7\textwidth]{latexImages/hw5-4.4.2.jpg} 
+\end{figure}
+
+Question: Is there a more compact way to display the same information as in a filling table once an automata reaches a certain size , or are other methods better/worse at being compact depending on number of accepting states or other variables?
+
+\section{Synthesis}
+
+\section{Evidence of Participation}
+
+\section{Conclusion}\label{conclusion}
+
+
+\begin{thebibliography}{99}
+    \bibitem[BLA]{bla} Author, \href{https://en.wikipedia.org/wiki/LaTeX}{Title}, Publisher, Year.
+    \end{thebibliography}
 
 \end{document}
